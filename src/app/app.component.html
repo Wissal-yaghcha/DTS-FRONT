@@ -1,7 +1,17 @@
-<div style="display: flex;">
+<div style="display: flex; min-height: 100vh;">
+  <!-- Barre latérale fixe à gauche -->
   <app-sidebar></app-sidebar>
   
-  <main style="margin-left: 260px; width: 100%; background-color: #f8f9fb; min-height: 100vh;">
-    <router-outlet></router-outlet>
-  </main>
+  <!-- Zone de droite qui contient le header et le contenu des pages -->
+  <div style="flex-grow: 1; margin-left: 260px; display: flex; flex-direction: column;">
+    
+    <!-- Barre du haut -->
+    <app-header></app-header>
+    
+    <!-- Contenu dynamique (Dashboard, Catalogue, etc.) -->
+    <main style="padding: 30px; background-color: #f8f9fb; flex-grow: 1;">
+      <router-outlet></router-outlet>
+    </main>
+    
+  </div>
 </div>

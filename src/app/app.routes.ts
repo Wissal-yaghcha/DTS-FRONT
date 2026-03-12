@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { PanierComponent } from './panier/panier.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 export const routes: Routes = [
-  { path: 'panier', component: PanierComponent },
-  { path: '', redirectTo: 'panier', pathMatch: 'full' }
+  { path: 'dashboard', component: DashboardComponent },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
 ];

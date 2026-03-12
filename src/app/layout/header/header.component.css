@@ -1,0 +1,51 @@
+.top-header {
+    height: 70px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    border-bottom: 1px solid #e0e6ed;
+}
+
+.page-title {
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-info {
+    text-align: right;
+}
+
+.user-name {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.user-role {
+    margin: 0;
+    font-size: 11px;
+    color: #888;
+}
+
+.user-avatar {
+    width: 35px;
+    height: 35px;
+    background-color: #fef0e6;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ff7900;
+}
