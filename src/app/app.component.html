@@ -1,7 +1,7 @@
-<h1>Application DTS</h1>
-
-<!-- Composant Panier -->
-<app-panier></app-panier>
-
-<!-- Zone des routes Angular -->
-<router-outlet></router-outlet>
+<div style="display: flex;">
+  <app-sidebar></app-sidebar>
+  
+  <main style="margin-left: 260px; width: 100%; background-color: #f8f9fb; min-height: 100vh;">
+    <router-outlet></router-outlet>
+  </main>
+</div>
