@@ -1,50 +1,138 @@
 <div class="catalogue-container">
+  
+  <!-- ENTÊTE AVEC BOUTONS D'ACTION (S'affiche différemment selon le mode) -->
   <div class="header-section">
-    <h1>Gestion du Catalogue</h1>
-    <p>Recherchez un terminal par Code SAP, modifiez ou ajoutez de nouveaux terminaux.</p>
-  </div>
-
-  <!-- Barre de recherche -->
-  <div class="search-container">
-    <div class="search-box">
-      <i class="icon-search">🔍</i>
-      <input type="text" placeholder="Rechercher par Code SAP...">
+    <div>
+      <h1>Gestion du Catalogue</h1>
+      <p *ngIf="viewMode === 'list'">Recherchez un terminal par Code SAP, modifiez ou ajoutez de nouveaux terminaux.</p>
+      <p *ngIf="viewMode === 'form'">Remplissez les informations pour créer un nouveau terminal dans le système.</p>
     </div>
-    <button class="btn-search">Rechercher</button>
+    <div class="action-buttons" *ngIf="viewMode === 'list'">
+      <button class="btn-import" (click)="toggleImportModal()">📤 Importer un fichier</button>
+      <button class="btn-add" (click)="setMode('form')">+ Ajouter Manuel</button>
+    </div>
   </div>
 
-  <!-- Tableau des terminaux -->
-  <div class="table-wrapper">
-    <table class="catalogue-table">
-      <thead>
-        <tr>
-          <th>Code SAP</th>
-          <th>Produit</th>
-          <th>Type</th>
-          <th>Prix HT</th>
-          <th>Prix TTC</th>
-          <th>Statut Promo</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let t of terminaux">
-          <td class="sap-code">{{ t.sap }}</td>
-          <td class="product-name">{{ t.nom }}</td>
-          <td>{{ t.type }}</td>
-          <td class="price">{{ t.ht | number:'1.0-0' }} MAD</td>
-          <td class="price">{{ t.ttc | number:'1.0-0' }} MAD</td>
-          <td>
-            <!-- Badge dynamique selon la promo -->
-            <span class="badge" [ngClass]="{'badge-none': t.promo === 'Aucune', 'badge-promo': t.promo !== 'Aucune'}">
-              {{ t.promo }}
-            </span>
-          </td>
-          <td>
-            <button class="btn-edit">✏️ Modifier</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <!-- ZONE CONTENU DYNAMIQUE -->
+
+  <!-- VUE 1 : TABLEAU DES TERMINAUX -->
+  <div *ngIf="viewMode === 'list'">
+    <div class="search-container">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" placeholder="Rechercher par Code SAP...">
+      </div>
+      <button class="btn-search">Rechercher</button>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="catalogue-table">
+        <thead>
+          <tr>
+            <th>Code SAP</th>
+            <th>Produit</th>
+            <th>Type</th>
+            <th>Prix HT</th>
+            <th>Prix TTC</th>
+            <th>Statut Promo</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let t of terminaux">
+            <td class="sap-code">{{ t.sap }}</td>
+            <td class="product-name">{{ t.nom }}</td>
+            <td>{{ t.type }}</td>
+            <td class="price">{{ t.ht | number }} MAD</td>
+            <td class="price">{{ t.ttc | number }} MAD</td>
+            <td>
+              <span class="badge" [ngClass]="{'badge-none': t.promo === 'Aucune', 'badge-promo': t.promo !== 'Aucune'}">
+                {{ t.promo }}
+              </span>
+            </td>
+            <td>
+              <button class="btn-edit" (click)="setMode('form')">✏️ Modifier</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+
+  <!-- VUE 2 : FORMULAIRE D'AJOUT MANUEL (FICHE PRODUIT) -->
+  <div *ngIf="viewMode === 'form'" class="form-card">
+    <div class="form-card-header">
+      <h2>Fiche Produit - Nouveau terminal</h2>
+      <button class="btn-cancel" (click)="setMode('list')">✕ Annuler</button>
+    </div>
+
+    <div class="form-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Code SAP</label>
+          <input type="text" placeholder="Ex: SAP-005">
+        </div>
+        <div class="form-group">
+          <label>Nom du produit</label>
+          <input type="text" placeholder="Ex: Samsung Galaxy S25">
+        </div>
+        <div class="form-group">
+          <label>Type</label>
+          <input type="text" placeholder="Ex: Smartphone, Tablette">
+        </div>
+      </div>
+
+      <div class="status-row">
+        <label class="switch">
+          <input type="checkbox" checked>
+          <span class="slider round"></span>
+        </label>
+        <span class="status-label">Terminal actif</span>
+      </div>
+
+      <div class="pricing-box">
+        <h3>TARIFICATION & CANAL</h3>
+        <div class="pricing-tabs">
+          <button class="tab-btn">Canal POSI</button>
+          <button class="tab-btn active">Canal POSD</button>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Prix HT (MAD)</label>
+            <input type="number" placeholder="0">
+          </div>
+          <div class="form-group">
+            <label>Prix TTC (MAD)</label>
+            <input type="number" placeholder="0">
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-submit">VALIDER ET ENREGISTRER</button>
+    </div>
+  </div>
+
+  <!-- MODALE D'IMPORTATION EXCEL (POPUP) -->
+  <div class="modal-overlay" *ngIf="showImportModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>Importation en masse</h3>
+        <button class="close-modal" (click)="toggleImportModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Importez un fichier Excel contenant toutes les données (terminaux, prix, visibilité).</p>
+        
+        <div class="drop-zone">
+          <div class="upload-icon">📤</div>
+          <p>Glissez-déposez votre fichier ici <br> ou <span>parcourir</span></p>
+          <small>Formats autorisés : .xlsx, .xls</small>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel-modal" (click)="toggleImportModal()">Annuler</button>
+        <button class="btn-confirm-import">Démarrer l'importation</button>
+      </div>
+    </div>
+  </div>
+
 </div>
