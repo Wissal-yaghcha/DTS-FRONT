@@ -1,0 +1,50 @@
+<div class="catalogue-container">
+  <div class="header-section">
+    <h1>Gestion du Catalogue</h1>
+    <p>Recherchez un terminal par Code SAP, modifiez ou ajoutez de nouveaux terminaux.</p>
+  </div>
+
+  <!-- Barre de recherche -->
+  <div class="search-container">
+    <div class="search-box">
+      <i class="icon-search">🔍</i>
+      <input type="text" placeholder="Rechercher par Code SAP...">
+    </div>
+    <button class="btn-search">Rechercher</button>
+  </div>
+
+  <!-- Tableau des terminaux -->
+  <div class="table-wrapper">
+    <table class="catalogue-table">
+      <thead>
+        <tr>
+          <th>Code SAP</th>
+          <th>Produit</th>
+          <th>Type</th>
+          <th>Prix HT</th>
+          <th>Prix TTC</th>
+          <th>Statut Promo</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of terminaux">
+          <td class="sap-code">{{ t.sap }}</td>
+          <td class="product-name">{{ t.nom }}</td>
+          <td>{{ t.type }}</td>
+          <td class="price">{{ t.ht | number:'1.0-0' }} MAD</td>
+          <td class="price">{{ t.ttc | number:'1.0-0' }} MAD</td>
+          <td>
+            <!-- Badge dynamique selon la promo -->
+            <span class="badge" [ngClass]="{'badge-none': t.promo === 'Aucune', 'badge-promo': t.promo !== 'Aucune'}">
+              {{ t.promo }}
+            </span>
+          </td>
+          <td>
+            <button class="btn-edit">✏️ Modifier</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

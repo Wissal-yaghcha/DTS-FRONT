@@ -1,0 +1,85 @@
+.dashboard-container {
+  padding: 10px;
+}
+
+.dashboard-header h1 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1c262f;
+  margin-bottom: 5px;
+}
+
+.dashboard-header p {
+  color: #8a96a3;
+  font-size: 14px;
+  margin-bottom: 40px;
+}
+
+/* Grille de 3 colonnes */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+/* Style de la Carte */
+.stat-card {
+  background-color: white;
+  border-radius: 15px;
+  padding: 25px;
+  border: 1px solid #edf2f7;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* En-tête de la carte (Icône + Flèche) */
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.icon-wrapper {
+  width: 50px;
+  height: 50px;
+  background-color: #ff7900;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+}
+
+.arrow {
+  color: #aeb7c2;
+  font-size: 20px;
+}
+
+/* Texte de la carte */
+.stat-number {
+  font-size: 42px;
+  font-weight: 800;
+  color: #1c262f;
+  margin: 0;
+}
+
+.stat-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1c262f;
+  margin: 10px 0 5px 0;
+}
+
+.stat-desc {
+  font-size: 13px;
+  color: #8a96a3;
+  line-height: 1.4;
+  margin: 0;
+}
